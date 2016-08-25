@@ -2,18 +2,17 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 var Card = React.createClass({
-    render: function() {
+    render: function(props) {
         return (
-            <div className='card'></div>
+            <div className='card'>{this.props.text}</div>
         );
     }
 });
 
-
 var List = React.createClass({
-    render: function() {
+    render: function(props) {
         return (
-            <div className='list'>
+            <div className='list'>{this.props.listTitle}
                 <Card/>
             </div>
         );
@@ -21,40 +20,10 @@ var List = React.createClass({
 });
 
 var Board = React.createClass({
-    getInitialState: function() {
-        return {
-            cards: [
-                'First card',
-                'Second card',
-                'Third card'
-            ],
-
-            lists: [
-                'First list',
-                'Second list',
-                'Third list'
-            ]
-        }
-    },
-
     render: function (props) {
         return (
             <div className='board'>{this.props.boardTitle}
-                {
-                    this.state.lists.map(function(listTitle, i) {
-                        return (
-                            <List key={i}>{listTitle}
-                                {
-                                    this.state.cards.map(function(text, j) {
-                                        return (
-                                            <Card key={i}>{text}</Card>
-                                        )
-                                    })
-                                }
-                            </List>
-                        )
-                    })
-                }
+                <List/>
             </div>
         );
     }
@@ -62,12 +31,13 @@ var Board = React.createClass({
 
 document.addEventListener('DOMContentLoaded', function () {
     ReactDOM.render(
-
             <Board boardTitle='Board for example trello'>
-                <List>
-                    <Card/>
-                </List>
-            </Board>
 
+            </Board>
         , document.getElementById('trello'));
+    ReactDOM.render (<List listTitle='Title for the list'>
+
+        </List>, document.getElementById('trello'));
+    ReactDOM.render (<Card text='First card'/>, document.getElementById('trello'));
 });
+

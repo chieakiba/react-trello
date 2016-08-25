@@ -52,18 +52,23 @@
 	var Card = React.createClass({
 	    displayName: 'Card',
 	
-	    render: function render() {
-	        return React.createElement('div', { className: 'card' });
+	    render: function render(props) {
+	        return React.createElement(
+	            'div',
+	            { className: 'card' },
+	            this.props.text
+	        );
 	    }
 	});
 	
 	var List = React.createClass({
 	    displayName: 'List',
 	
-	    render: function render() {
+	    render: function render(props) {
 	        return React.createElement(
 	            'div',
 	            { className: 'list' },
+	            this.props.listTitle,
 	            React.createElement(Card, null)
 	        );
 	    }
@@ -72,47 +77,20 @@
 	var Board = React.createClass({
 	    displayName: 'Board',
 	
-	    getInitialState: function getInitialState() {
-	        return {
-	            cards: ['First card', 'Second card', 'Third card'],
-	
-	            lists: ['First list', 'Second list', 'Third list']
-	        };
-	    },
-	
 	    render: function render(props) {
 	        return React.createElement(
 	            'div',
 	            { className: 'board' },
 	            this.props.boardTitle,
-	            this.state.lists.map(function (listTitle, i) {
-	                return React.createElement(
-	                    List,
-	                    { key: i },
-	                    listTitle,
-	                    this.state.cards.map(function (text, j) {
-	                        return React.createElement(
-	                            Card,
-	                            { key: i },
-	                            text
-	                        );
-	                    })
-	                );
-	            })
+	            React.createElement(List, null)
 	        );
 	    }
 	});
 	
 	document.addEventListener('DOMContentLoaded', function () {
-	    ReactDOM.render(React.createElement(
-	        Board,
-	        { boardTitle: 'Board for example trello' },
-	        React.createElement(
-	            List,
-	            null,
-	            React.createElement(Card, null)
-	        )
-	    ), document.getElementById('trello'));
+	    ReactDOM.render(React.createElement(Board, { boardTitle: 'Board for example trello' }), document.getElementById('trello'));
+	    ReactDOM.render(React.createElement(List, { listTitle: 'Title for the list' }), document.getElementById('trello'));
+	    ReactDOM.render(React.createElement(Card, { text: 'First card' }), document.getElementById('trello'));
 	});
 
 /***/ },
