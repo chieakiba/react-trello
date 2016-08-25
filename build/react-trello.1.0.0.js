@@ -48,85 +48,23 @@
 	
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(34);
-	var text = 'This is a card';
-	
-	var Text = function Text() {
-	    return React.createElement(
-	        'div',
-	        { className: props.boards },
-	        React.createElement(
-	            'div',
-	            { className: props.lists },
-	            React.createElement(
-	                'div',
-	                { className: props.cards },
-	                React.createElement(Card, { name: 'anything',
-	                    message: 'Does this show up on the page?' })
-	            )
-	        )
-	    );
-	};
 	
 	var Card = React.createClass({
 	    displayName: 'Card',
 	
-	    getInitialState: function getInitialState() {
-	        return {
-	            fontColor: false
-	        };
-	    },
-	    onClick: function onClick() {
-	        this.setState({
-	            fontColor: !this.state.fontColor
-	        });
-	    },
 	    render: function render() {
-	        var changeCard = 'card ' + (this.state.fontColor ? 'fontColor' : '');
-	        return React.createElement(
-	            'div',
-	            { className: changeCard, onClick: this.onClick },
-	            React.createElement(
-	                'div',
-	                { className: 'inCard' },
-	                this.props.text
-	            ),
-	            React.createElement(
-	                'div',
-	                { className: 'card-text' },
-	                'hi'
-	            )
-	        );
+	        return React.createElement('div', { className: 'card' });
 	    }
 	});
 	
 	var List = React.createClass({
 	    displayName: 'List',
 	
-	    getInitialState: function getInitialState() {
-	        return {
-	            highlight: false
-	        };
-	    },
-	    onClick: function onClick() {
-	        this.setState({
-	            highlight: !this.state.highlight
-	        });
-	    },
 	    render: function render() {
-	        var changeList = 'list ' + (this.state.highlight ? 'highlight' : '');
 	        return React.createElement(
 	            'div',
-	            { className: changeList, onClick: this.onClick },
-	            React.createElement(
-	                'div',
-	                { className: 'list-title' },
-	                this.props.listTitle
-	            ),
-	            React.createElement(
-	                'div',
-	                { className: 'card' },
-	                this.props.cards
-	            )
+	            { className: 'list' },
+	            React.createElement(Card, null)
 	        );
 	    }
 	});
@@ -136,69 +74,45 @@
 	
 	    getInitialState: function getInitialState() {
 	        return {
-	            background: false
+	            cards: ['First card', 'Second card', 'Third card'],
+	
+	            lists: ['First list', 'Second list', 'Third list']
 	        };
 	    },
-	    onClick: function onClick() {
-	        this.setState({
-	            background: !this.state.background
-	        });
-	    },
-	    render: function render() {
-	        var changeBoard = 'board ' + (this.state.background ? 'background' : '');
+	
+	    render: function render(props) {
 	        return React.createElement(
 	            'div',
-	            { className: changeBoard, onClick: this.onClick },
-	            React.createElement(
-	                'div',
-	                { className: 'board-title' },
-	                this.props.boardTitle
-	            ),
-	            React.createElement(
-	                'div',
-	                { className: 'list' },
-	                this.props.lists
-	            )
+	            { className: 'board' },
+	            this.props.boardTitle,
+	            this.state.lists.map(function (listTitle, i) {
+	                return React.createElement(
+	                    List,
+	                    { key: i },
+	                    listTitle,
+	                    this.state.cards.map(function (text, j) {
+	                        return React.createElement(
+	                            Card,
+	                            { key: i },
+	                            text
+	                        );
+	                    })
+	                );
+	            })
 	        );
 	    }
 	});
 	
-	//var Card = function(props) {
-	//
-	//    return (
-	//        <div className='card'>
-	//            <div className='text'>textInCard</div>
-	//            <div className='inCard'>{props.text}</div>
-	//        </div>
-	//    );
-	//};
-	
-	//var List = function(props) {
-	//    return(
-	//        <div className='list'>
-	//           <div className='list-title'>{props.listTitle}</div>
-	//            <div className='inCard'>{props.cards}</div>
-	//            <Card/>
-	//            <Card/>
-	//            <Card/>
-	//        </div>
-	//    );
-	//};
-	
-	//var Board = function(props) {
-	//    return (
-	//        <div className='board'>
-	//           <div className='board-title'>{props.boardTitle}</div>
-	//            <div className='list-title'>{props.lists}</div>
-	//            <List/>
-	//            <List/>
-	//            <List/>
-	//        </div>
-	//    );
-	//};
-	
 	document.addEventListener('DOMContentLoaded', function () {
-	    ReactDOM.render(React.createElement(List, null), document.getElementById('card'));
+	    ReactDOM.render(React.createElement(
+	        Board,
+	        { boardTitle: 'Board for example trello' },
+	        React.createElement(
+	            List,
+	            null,
+	            React.createElement(Card, null)
+	        )
+	    ), document.getElementById('trello'));
 	});
 
 /***/ },

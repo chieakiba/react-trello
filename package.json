@@ -4,8 +4,17 @@
     "description": "",
     "main": "index.js",
     "scripts": {
+        "mkdir": "mkdir -p build",
         "build": "npm run clean && npm run mkdir && npm run build:html && npm run build:css && npm run build:js",
         "watch": "npm run watch:html & npm run watch:css & npm run watch:js",
+        "build:html": "npm run clean:html && webpack",
+        "watch:html": "npm run build:html && webpack --watch",
+        "clean:html": "rm -f build/index.html",
+
+        "build:css": "npm run clean:css && webpack",
+        "watch:css": "npm run build:css && webpack --watch",
+        "clean:css": "rm -f build/style.css",
+
         "build:js": "npm run clean:js && webpack",
         "watch:js": "npm run build:js && webpack --watch",
         "clean:js": "rm -f build/$npm_package_name.$npm_package_version.js build/$npm_package_name.$npm_package_version.js.map"
