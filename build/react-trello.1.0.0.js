@@ -61,33 +61,25 @@
 	    }
 	});
 	
-	var TextInput = function TextInput(props) {
-	    return React.createElement(
-	        'input',
-	        { type: 'text', onChange: props.onAddInputChanged },
-	        props.text
-	    );
-	};
-	
 	var List = React.createClass({
 	    displayName: 'List',
 	
 	    getInitialState: function getInitialState() {
 	        return {
-	            texts: ['First Card', 'Second Card', 'Third Card']
+	            texts: ['First Card', 'Second Card', 'Third Card'],
+	            adding: false
 	        };
 	    },
 	
 	    onAddInputChanged: function onAddInputChanged() {
-	        console.log('Does this show anything on the console?');
+	        this.setState({ adding: true });
 	    },
 	
 	    onAddSubmit: function onAddSubmit(event, newText) {
-	        console.log('Did this add the submit button');
 	        event.preventDefault();
-	        var listArray = this.state.texts;
-	        listArray[i] = newText;
-	        this.setState({ texts: listArray });
+	        var cardArray = this.state.texts;
+	        cardArray.push(newText);
+	        this.setState({ texts: cardArray });
 	    },
 	
 	    render: function render(props) {
@@ -98,11 +90,11 @@
 	            this.state.texts.map(function (text, i) {
 	                return React.createElement(
 	                    Card,
-	                    { key: i },
+	                    { key: i, index: i },
 	                    text
 	                );
 	            }),
-	            React.createElement('input', { className: 'cardInput', defaultValue: 'Add text here' }),
+	            React.createElement('input', { onChange: this.onAddInputChanged, className: 'cardInput', placeholder: 'Add text here' }),
 	            React.createElement(
 	                'div',
 	                null,

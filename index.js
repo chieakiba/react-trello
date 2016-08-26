@@ -9,9 +9,18 @@ var Card = React.createClass({
     }
 });
 
-var TextInput = function(props) {
-    return <input type='text' onChange={props.onAddInputChanged}>{props.text}</input>
-};
+var ListContainter = React.createClass({
+    getInitialState: function() {
+        //text entered into the input
+
+        //card array
+    },
+
+    render: function() {
+        //render List component
+            //pass the card array from the state as props
+    }
+});
 
 var List = React.createClass({
     getInitialState: function() {
@@ -20,20 +29,20 @@ var List = React.createClass({
               'First Card',
               'Second Card',
               'Third Card'
-          ]
+          ],
+          adding: false
       }
     },
 
     onAddInputChanged: function () {
-        console.log('Does this show anything on the console?');
+        this.setState({adding: true})
     },
 
     onAddSubmit: function(event, newText) {
-        console.log('Did this add the submit button');
         event.preventDefault();
-        var listArray = this.state.texts;
-        listArray[i] = newText;
-        this.setState({texts: listArray});
+        var cardArray = this.state.texts;
+        cardArray.push(newText);
+        this.setState({texts: cardArray});
     },
 
     render: function(props) {
@@ -41,12 +50,10 @@ var List = React.createClass({
                 <div className='list'>{this.props.children}
                     {
                         this.state.texts.map(function (text, i) {
-                            return (
-                                    <Card key={i}>{text}</Card>
-                            )
+                            return (<Card key={i} index={i}>{text}</Card>)
                         })
                     }
-                    <input className='cardInput' defaultValue='Add text here'></input>
+                    <input onChange={this.onAddInputChanged} className='cardInput' placeholder='Add text here'></input>
                     <div>
                         <button onClick={this.onAddSubmit} className='button-addCard'>Submit</button>
                     </div>
@@ -59,9 +66,7 @@ var Board = React.createClass({
     getInitialState: function() {
         return {
             lists: [
-                'First List',
-                'Second List',
-                'Third List'
+                'First List'
             ]
         }
     },
