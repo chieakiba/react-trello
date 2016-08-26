@@ -66,35 +66,46 @@
 	
 	    getInitialState: function getInitialState() {
 	        return {
-	            texts: ['First Card', 'Second Card', 'Third Card'],
-	            adding: false
+	            userInput: "",
+	            texts: []
 	        };
 	    },
 	
-	    onAddInputChanged: function onAddInputChanged() {
-	        this.setState({ adding: true });
+	    onAddInputChanged: function onAddInputChanged(event) {
+	        this.setState({
+	            userInput: event.currentTarget.value
+	        });
 	    },
 	
-	    onAddSubmit: function onAddSubmit(event, newText) {
+	    onAddSubmit: function onAddSubmit(event) {
 	        event.preventDefault();
 	        var cardArray = this.state.texts;
-	        cardArray.push(newText);
+	        cardArray.push(this.state.userInput);
 	        this.setState({ texts: cardArray });
+	
+	        // clear the input
+	        this.refs.userInput.value = '';
 	    },
 	
 	    render: function render(props) {
+	        var texts = [];
+	        for (var i = 0; i < this.state.texts.length; i++) {
+	            texts.push(React.createElement(
+	                Card,
+	                { key: i, index: i },
+	                this.state.texts[i]
+	            ));
+	        }
+	
 	        return React.createElement(
 	            'div',
 	            { className: 'list' },
 	            this.props.children,
-	            this.state.texts.map(function (text, i) {
-	                return React.createElement(
-	                    Card,
-	                    { key: i, index: i },
-	                    text
-	                );
-	            }),
-	            React.createElement('input', { onChange: this.onAddInputChanged, className: 'cardInput', placeholder: 'Add text here' }),
+	            React.createElement(
+	                'div',
+	                null,
+	                React.createElement('input', { ref: 'userInput', onChange: this.onAddInputChanged, className: 'cardInput', placeholder: 'Add text here' })
+	            ),
 	            React.createElement(
 	                'div',
 	                null,
@@ -113,7 +124,7 @@
 	
 	    getInitialState: function getInitialState() {
 	        return {
-	            lists: ['First List', 'Second List', 'Third List']
+	            lists: ['First List']
 	        };
 	    },
 	

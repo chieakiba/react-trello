@@ -9,51 +9,42 @@ var Card = React.createClass({
     }
 });
 
-var ListContainter = React.createClass({
-    getInitialState: function() {
-        //text entered into the input
-
-        //card array
-    },
-
-    render: function() {
-        //render List component
-            //pass the card array from the state as props
-    }
-});
-
 var List = React.createClass({
-    getInitialState: function() {
-      return {
-          texts: [
-              'First Card',
-              'Second Card',
-              'Third Card'
-          ],
-          adding: false
-      }
+    getInitialState: function () {
+        return {
+            userInput: "",
+            texts: []
+        }
     },
 
-    onAddInputChanged: function () {
-        this.setState({adding: true})
+    onAddInputChanged: function (event) {
+        this.setState({
+            userInput: event.currentTarget.value
+        })
     },
 
-    onAddSubmit: function(event, newText) {
+    onAddSubmit: function(event) {
         event.preventDefault();
         var cardArray = this.state.texts;
-        cardArray.push(newText);
+        cardArray.push(this.state.userInput);
         this.setState({texts: cardArray});
+
+        // clear the input
+        this.refs.userInput.value = '';
+
     },
 
     render: function(props) {
+        var texts = [];
+        for (var i = 0; i < this.state.texts.length; i++) {
+            texts.push(<Card key={i} index={i}>{this.state.texts[i]}</Card>);
+        }
+
         return (
-                <div className='list'>{this.props.children}
-                    {
-                        this.state.texts.map(function (text, i) {
-                            return (<Card key={i} index={i}>{text}</Card>)
-                        })
-                    }
-                    <input onChange={this.onAddInputChanged} className='cardInput' placeholder='Add text here'></input>
+            <div className='list'>{this.props.children}
+                   <div>
+                       <input ref='userInput' onChange={this.onAddInputChanged} className='cardInput' placeholder='Add text here'></input>
+                   </div>
                     <div>
                         <button onClick={this.onAddSubmit} className='button-addCard'>Submit</button>
                     </div>
