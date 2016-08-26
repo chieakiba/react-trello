@@ -9,6 +9,10 @@ var Card = React.createClass({
     }
 });
 
+var TextInput = function(props) {
+    return <input type='text' onChange={props.onAddInputChanged}>{props.text}</input>
+};
+
 var List = React.createClass({
     getInitialState: function() {
       return {
@@ -20,14 +24,30 @@ var List = React.createClass({
       }
     },
 
+    onAddInputChanged: function () {
+        console.log('Does this show anything on the console?');
+    },
+
+    onAddSubmit: function(event, newText) {
+        console.log('Did this add the submit button');
+        event.preventDefault();
+        var listArray = this.state.texts;
+        listArray[i] = newText;
+        this.setState({texts: listArray});
+    },
+
     render: function(props) {
         return (
                 <div className='list'>{this.props.children}
                     {
                         this.state.texts.map(function (text, i) {
-                            return (<Card key={i}>{text}</Card>)
+                            return (
+                                    <Card key={i}>{text}</Card>
+                            )
                         })
                     }
+                    <input className='cardInput' value='Add text here'></input>
+                    <button onClick={this.onAddSubmit} className='button-addCard'>Submit</button>
                 </div>
         );
     }

@@ -61,6 +61,14 @@
 	    }
 	});
 	
+	var TextInput = function TextInput(props) {
+	    return React.createElement(
+	        'input',
+	        { type: 'text', onChange: props.onAddInputChanged },
+	        props.text
+	    );
+	};
+	
 	var List = React.createClass({
 	    displayName: 'List',
 	
@@ -68,6 +76,18 @@
 	        return {
 	            texts: ['First Card', 'Second Card', 'Third Card']
 	        };
+	    },
+	
+	    onAddInputChanged: function onAddInputChanged() {
+	        console.log('Does this show anything on the console?');
+	    },
+	
+	    onAddSubmit: function onAddSubmit(event, newText) {
+	        console.log('Did this add the submit button');
+	        event.preventDefault();
+	        var listArray = this.state.texts;
+	        listArray[i] = newText;
+	        this.setState({ texts: listArray });
 	    },
 	
 	    render: function render(props) {
@@ -81,7 +101,13 @@
 	                    { key: i },
 	                    text
 	                );
-	            })
+	            }),
+	            React.createElement('input', { value: 'Add text here' }),
+	            React.createElement(
+	                'button',
+	                { onClick: this.onAddSubmit, className: 'button-addCard' },
+	                'Submit'
+	            )
 	        );
 	    }
 	});
@@ -112,13 +138,7 @@
 	});
 	
 	document.addEventListener('DOMContentLoaded', function () {
-	    ReactDOM.render(React.createElement(
-	        'div',
-	        null,
-	        React.createElement(Board, { boardTitle: 'Trello Board' }),
-	        React.createElement(List, { listTitle: 'First List' }),
-	        React.createElement(Card, { text: 'First Card' })
-	    ), document.getElementById('trello'));
+	    ReactDOM.render(React.createElement(Board, { boardTitle: 'Trello Board' }), document.getElementById('trello'));
 	});
 
 /***/ },
