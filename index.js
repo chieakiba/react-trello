@@ -46,8 +46,10 @@ var List = React.createClass({
                             )
                         })
                     }
-                    <input className='cardInput' value='Add text here'></input>
-                    <button onClick={this.onAddSubmit} className='button-addCard'>Submit</button>
+                    <input className='cardInput' defaultValue='Add text here'></input>
+                    <div>
+                        <button onClick={this.onAddSubmit} className='button-addCard'>Submit</button>
+                    </div>
                 </div>
         );
     }

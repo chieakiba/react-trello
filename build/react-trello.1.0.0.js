@@ -102,11 +102,15 @@
 	                    text
 	                );
 	            }),
-	            React.createElement('input', { value: 'Add text here' }),
+	            React.createElement('input', { className: 'cardInput', defaultValue: 'Add text here' }),
 	            React.createElement(
-	                'button',
-	                { onClick: this.onAddSubmit, className: 'button-addCard' },
-	                'Submit'
+	                'div',
+	                null,
+	                React.createElement(
+	                    'button',
+	                    { onClick: this.onAddSubmit, className: 'button-addCard' },
+	                    'Submit'
+	                )
 	            )
 	        );
 	    }
