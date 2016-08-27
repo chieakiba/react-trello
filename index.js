@@ -35,13 +35,13 @@ var List = React.createClass({
     },
 
     render: function(props) {
-        var texts = [];
-        for (var i = 0; i < this.state.texts.length; i++) {
-            texts.push(<Card key={i} index={i}>{this.state.texts[i]}</Card>);
-        }
-
         return (
             <div className='list'>{this.props.children}
+                  {
+                    this.state.texts.map(function(text, i) {
+                        return(<Card key={i} index={i}>{text}</Card>)
+                    })
+                }
                    <div>
                        <input ref='userInput' onChange={this.onAddInputChanged} className='cardInput' placeholder='Add text here'></input>
                    </div>

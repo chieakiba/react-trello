@@ -88,19 +88,17 @@
 	    },
 	
 	    render: function render(props) {
-	        var texts = [];
-	        for (var i = 0; i < this.state.texts.length; i++) {
-	            texts.push(React.createElement(
-	                Card,
-	                { key: i, index: i },
-	                this.state.texts[i]
-	            ));
-	        }
-	
 	        return React.createElement(
 	            'div',
 	            { className: 'list' },
 	            this.props.children,
+	            this.state.texts.map(function (text, i) {
+	                return React.createElement(
+	                    Card,
+	                    { key: i, index: i },
+	                    text
+	                );
+	            }),
 	            React.createElement(
 	                'div',
 	                null,
