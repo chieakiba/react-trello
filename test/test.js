@@ -3,31 +3,42 @@ var React = require('react');
 var TestUtils = require('react-addons-test-utils');
 var should = require('chai').should();
 
-var Card = require('../index');
-var List = require('../index');
-var Board = require('../index');
+var Card = require('../index').Card;
+var List = require('../index').List;
+var Board = require('../index').Board;
 
-describe('Card portion of Trello', function() {
+describe('Card component', function() {
   it('show the card or cards properly', function() {
+    var text = 'this is a test';
 
+    var renderer = TestUtils.createRenderer();
+    renderer.render(<Card card={text}/>);
+    var result = renderer.getRenderOutput();
+    var card = result.props;
+    card.className.should.equal('card');
   });
 });
 
-describe('List portion of Trello', function() {
+describe('List component', function() {
   it('show the list properly', function() {
-    var text = 'this is a test';
     var card = ['first card', 'second card', 'third card'];
 
     var renderer = TestUtils.createRenderer();
     renderer.render(<List list={card}/>);
     var result = renderer.getRenderOutput();
     var list = result.props.children;
-    console.log('what is in result.props', result.props);
-    console.log('what is in this list', list);
+
+    result.props.className.should.equal('list');
+    list[2].props.children.props.className.should.equal('cardInput');
+    list[2].props.children.props.placeholder.should.equal('Add text here');
+    list[2].props.children.type.should.equal('input');
+    list[3].props.children.type.should.equal('button');
+    list[3].props.children.props.className.should.equal('button-addCard');
+    list[3].props.children.props.children.should.equal('Submit');
   });
 });
 
-describe('Board portion of Trello', function() {
+describe('Board component', function() {
   it('show the board properly', function() {
     var list = ['this is a test'];
     var boardTitle = 'Trello Board';
