@@ -75,9 +75,9 @@ var Board = React.createClass({
     }
 });
 
-// document.addEventListener('DOMContentLoaded', function () {
-//     ReactDOM.render(<Board boardTitle='Trello Board'/>, document.getElementById('trello'));
-// });
+document.addEventListener('DOMContentLoaded', function () {
+    ReactDOM.render(<Board boardTitle='Trello Board'/>, document.getElementById('trello'));
+});
 
 module.exports.Card = Card;
 module.exports.List = List;
