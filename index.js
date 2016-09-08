@@ -75,6 +75,7 @@ var Board = React.createClass({
     }
 });
 
+//Need to comment this out when running test
 document.addEventListener('DOMContentLoaded', function () {
     ReactDOM.render(<Board boardTitle='Trello Board'/>, document.getElementById('trello'));
 });
