@@ -3,9 +3,9 @@ var React = require('react');
 var TestUtils = require('react-addons-test-utils');
 var should = require('chai').should();
 
-var Card = require('../index').Card;
-var List = require('../index').List;
-var Board = require('../index').Board;
+var Card = require('../card').Card;
+var List = require('../list').List;
+var Board = require('../board').Board;
 
 describe('Card component', function() {
   it('show the card or cards properly', function() {
